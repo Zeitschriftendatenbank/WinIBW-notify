@@ -62,13 +62,13 @@ var Notify = {
         switch (typeName) {
             case 'error-icon':
             case 'question-icon':
-                defaultSeconds = getProfileInt('notify', 'defaultSecondsFor' + typeName, this.default_error_seconds);
+                defaultSeconds = getProfileInt('notify', 'defaultSecondsFor_' + typeName, this.default_error_seconds);
                 break;
             case 'warning-icon':
-                defaultSeconds = getProfileInt('notify', 'defaultSecondsFor' + typeName, this.default_warning_seconds);
+                defaultSeconds = getProfileInt('notify', 'defaultSecondsFor_' + typeName, this.default_warning_seconds);
                 break;
             default:
-                defaultSeconds = getProfileInt('notify', 'defaultSecondsFor' + typeName, this.default_info_seconds);
+                defaultSeconds = getProfileInt('notify', 'defaultSecondsFor_' + typeName, this.default_info_seconds);
         }
 
         if (typeof seconds !== 'number') {
@@ -77,7 +77,7 @@ var Notify = {
 
 
         // always append message to message stack of active window
-        activeWindow.appendMessage(text, code);
+        activeWindow.appendMessage('Notify: ' + text, code);
         // Behavior:
         //  - seconds === -1 => show a messageBox (must be clicked to close)
         //  - seconds === 0 => no popup (only append to message stack)
