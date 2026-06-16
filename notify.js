@@ -77,7 +77,7 @@ var Notify = {
 
 
         // always append message to message stack of active window
-        activeWindow.appendMessage('Notify: ' + text, code);
+        activeWindow.appendMessage((header || 'Notify') + ': ' + text, code);
         // Behavior:
         //  - seconds === -1 => show a messageBox (must be clicked to close)
         //  - seconds === 0 => no popup (only append to message stack)
@@ -104,6 +104,6 @@ var Notify = {
         this.popup(text, 'Warning', 'warning-icon', seconds);
     },
     info: function (text, seconds) {
-        this.popup(text, 'Information', 'message-icon', seconds);
+        this.popup(text, 'Info', 'message-icon', seconds);
     }
 };
