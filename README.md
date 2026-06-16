@@ -26,7 +26,7 @@ Notify.warning('I warned you', 4); // pops up an the warning message for four se
 
 // prefs.messageSliderPosition =  3
 // always popups
-Notify.error('That\'s an error'); // pops up an the error message until notified via click
+Notify.info('Got this?', -1); // pops up an the info message until notified via click
 Notify.warning('I warn you', 0); // no popup, adds info message to activeWindow's message stack
 ```
 
