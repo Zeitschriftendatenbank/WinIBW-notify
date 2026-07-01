@@ -75,9 +75,14 @@ var Notify = {
             seconds =  this._defaultSeconds(typeName);
         }
 
-
+        var messages = utility.messages();
+        if(messages.count > 0) {
+            activeWindow.appendMessage((header || 'Notify') + ': ' + text, code);
+        } else {
+            activeWindow.showMessage((header || 'Notify') + ': ' + text, code);
+        }
         // always append message to message stack of active window
-        activeWindow.appendMessage((header || 'Notify') + ': ' + text, code);
+        
         // Behavior:
         //  - seconds === -1 => show a messageBox (must be clicked to close)
         //  - seconds === 0 => no popup (only append to message stack)
