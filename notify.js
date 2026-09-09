@@ -1,5 +1,7 @@
 var Notify = {
     _sh: null,
+    messages: [],
+    maxMessages: 100,
     default_error_seconds: -1,
     default_warning_seconds: 2,
     default_info_seconds: 2,
@@ -81,6 +83,7 @@ var Notify = {
         } else {
             activeWindow.showMessage((header || 'Notify') + ': ' + text, code);
         }
+        this.messages.push({ text: (header || 'Notify') + ': ' + text, code: code, timestamp: new Date() });
         // always append message to message stack of active window
         
         // Behavior:
@@ -110,5 +113,19 @@ var Notify = {
     },
     info: function (text, seconds) {
         this.popup(text, 'Info', 'message-icon', seconds);
+    },
+    showLastMessages: function() {
+        var messageText = '';
+        var startIndex = Math.max(0, this.messages.length - this.maxMessages);
+        
+        for (var i = startIndex; i < this.messages.length; i++) {
+            messageText += (i + 1) + ': ' + this.messages[i].text + '\n';
+        }
+        
+        if (messageText === '') {
+            messageText = 'No messages to display.';
+        }
+        
+        messageBox('Last ' + this.maxMessages + ' Notify Messages', messageText, 'message-icon');
     }
 };
