@@ -40,12 +40,14 @@ var Notify = {
         var icons_numbers = { 'message-icon': 64, 'warning-icon': 48, 'error-icon': 16, 'question-icon': 32 };
         var numbers_icons = { 64: 'message-icon', 48: 'warning-icon', 16: 'error-icon', 32: 'question-icon' };
         var icon_code = { 'message-icon': 3, 'warning-icon': 2, 'error-icon': 1, 'question-icon': 3 };
+        // accept short aliases ('error', 'info', ...) used by some callers instead of the canonical '*-icon' names
+        var aliases = { 'error': 'error-icon', 'warning': 'warning-icon', 'warn': 'warning-icon', 'info': 'message-icon', 'information': 'message-icon', 'message': 'message-icon', 'question': 'question-icon' };
         var icon, code;
 
         var typeName;
         switch (typeof type) {
             case 'string':
-                typeName = type;
+                typeName = aliases[type] || type;
                 icon = icons_numbers[typeName] || 64;
                 code = icon_code[typeName] || 3;
                 break;
@@ -92,17 +94,17 @@ var Notify = {
         //  - seconds > 0 => show a timed popup for `seconds` seconds (if WScript.Shell available)
 
         if (seconds === -1) {
-            // show modal messageBox that requires user to click to dismiss
-            messageBox(header || 'Notification', text, icon);
+            // show modal messageBox that requires user to click to dismiss (expects icon name, not numeric code)
+            messageBox(header || 'Notification', text, typeName);
         } else if (typeof seconds === 'number' && seconds > 0) {
             var sh = this._getShell();
             if (sh) {
-                // Popup(text, seconds, title, type)
+                // Popup(text, seconds, title, type) uses the numeric VBScript icon constant
                 sh.Popup(text, seconds, header || 'Notification', icon);
                 return;
             }
-            // fallback when WScript.Shell not available: show messageBox (will require click)
-            messageBox(header || 'Notification', text, icon);
+            // fallback when WScript.Shell not available: show messageBox (expects icon name, not numeric code)
+            messageBox(header || 'Notification', text, typeName);
         }
     },
     error: function (text, seconds) {
