@@ -108,13 +108,13 @@ var Notify = {
         }
     },
     error: function (text, seconds) {
-        this.popup(text, 'Error', 'error-icon', seconds);
+        this.popup(text, 'Error', 'error', seconds);
     },
     warning: function (text, seconds) {
-        this.popup(text, 'Warning', 'warning-icon', seconds);
+        this.popup(text, 'Warning', 'warning', seconds);
     },
     info: function (text, seconds) {
-        this.popup(text, 'Info', 'message-icon', seconds);
+        this.popup(text, 'Info', 'message', seconds);
     },
     showLastMessages: function() {
         var messageText = '';
